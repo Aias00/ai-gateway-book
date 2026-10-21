@@ -1,0 +1,12 @@
+{
+  "title": "AI 网关与模型路由实战",
+  "subtitle": "从流式协议到预算与故障恢复",
+  "author": "Aias00",
+  "lang": "zh-CN",
+  "repository": "https://github.com/Aias00/ai-gateway-book",
+  "version": "1.0.0",
+  "description": "围绕可运行的 HTTP 网关与模型服务替身，理解能力路由、流式提交、故障切换、取消、租户预算与证据链。",
+  "slug": "ai-gateway-book",
+  "include_code": true,
+  "rights": "© 2026 Aias00. 保留所有权利。"
+}

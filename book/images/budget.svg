@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="350" viewBox="0 0 440 350" role="img" aria-labelledby="title desc">
+<title id="title">预算与并发分别处理</title><desc id="desc">完整可信结束后结算并释放差额；中断后释放并发，预算进入未知并继续保留。</desc>
+<rect width="440" height="350" rx="12" fill="#f7f7f3"/>
+<g font-family="sans-serif" text-anchor="middle" fill="#292e34">
+<rect x="42" y="24" width="356" height="72" rx="7" fill="#e8eeeb" stroke="#55766c"/>
+<text x="220" y="53" font-size="21" font-weight="700">原子准入</text><text x="220" y="78" font-size="15">预留额度，同时占用并发槽位</text>
+<g stroke="#55766c" stroke-width="2" fill="none"><path d="M220 96v24M116 120h208M116 120v25m208-25v25m-213-6 5 6 5-6m198 0 5 6 5-6"/></g>
+<g fill="#edf0f3" stroke="#65768a"><rect x="24" y="145" width="184" height="124" rx="7"/><rect x="232" y="145" width="184" height="124" rx="7"/></g>
+<g font-size="19" font-weight="700"><text x="116" y="174">完整可信结束</text><text x="324" y="174">中断或用量未知</text></g>
+<g font-size="16"><text x="116" y="201">记录实际消耗</text><text x="116" y="226">解除剩余预留</text><text x="324" y="201">保留预算预留</text><text x="324" y="226">等待权威证据对账</text></g>
+<text x="220" y="303" font-size="19">本地工作停止后，释放并发槽位</text>
+<text x="220" y="329" font-size="14" fill="#59646d">并发已经结束，不代表费用已经确定</text>
+</g></svg>

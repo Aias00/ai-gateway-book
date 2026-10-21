@@ -1,0 +1,14 @@
+body { font-family: serif; line-height: 1.8; margin: 5%; color: #292e34; }
+h1 { font-size: 1.65em; line-height: 1.5; margin-top: 1.5em; }
+h2 { font-size: 1.25em; line-height: 1.5; margin-top: 1.8em; }
+h3 { font-size: 1.08em; line-height: 1.5; margin-top: 1.5em; }
+p { orphans: 2; widows: 2; }
+a { color: #28685c; overflow-wrap: anywhere; }
+img, svg { max-width: 100%; height: auto; }
+code { font-family: monospace; overflow-wrap: anywhere; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-all; font-size: .78em; line-height: 1.6; background: #eff0ec; padding: .8em; }
+pre code { padding: 0; }
+table { width: 100%; border-collapse: collapse; font-size: .85em; }
+th, td { border: 1px solid #dedfd9; padding: .45em; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+blockquote { margin: 1em 0; padding-left: 1em; border-left: 3px solid #28685c; }
+hr { border: 0; border-top: 1px solid #dedfd9; }

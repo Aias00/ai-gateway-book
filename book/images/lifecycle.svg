@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="540" viewBox="0 0 440 540" role="img" aria-labelledby="title desc">
+<title id="title">请求的五个阶段</title><desc id="desc">身份与输入校验、能力与准入、联系上游、提交事件、分别处理执行终态和用量状态。</desc>
+<rect width="440" height="540" rx="12" fill="#f7f7f3"/>
+<g font-family="sans-serif" text-anchor="middle" fill="#292e34">
+<text x="220" y="35" font-size="22" font-weight="700">一次请求，分别保存执行与用量</text>
+<g fill="#e8eeeb" stroke="#55766c" stroke-width="1.5">
+<rect x="42" y="58" width="356" height="65" rx="7"/><rect x="42" y="147" width="356" height="65" rx="7"/><rect x="42" y="236" width="356" height="65" rx="7"/><rect x="42" y="325" width="356" height="65" rx="7"/>
+</g>
+<g font-size="20"><text x="220" y="85">身份与输入校验</text><text x="220" y="174">能力匹配与原子准入</text><text x="220" y="263">联系选定上游</text><text x="220" y="352">向客户端提交完整事件</text></g>
+<g font-size="14" fill="#59646d"><text x="220" y="108">拒绝时不启动上游</text><text x="220" y="197">保存请求标识、预算预留与并发</text><text x="220" y="286">没有输出也可能已经开始执行</text><text x="220" y="375">已显示的内容无法收回</text></g>
+<g stroke="#55766c" stroke-width="2" fill="none"><path d="M220 123v24m-5-6 5 6 5-6M220 212v24m-5-6 5 6 5-6M220 301v24m-5-6 5 6 5-6M220 390v26M120 416h200M120 416v20m200-20v20"/></g>
+<g fill="#edf0f3" stroke="#65768a"><rect x="28" y="436" width="184" height="76" rx="7"/><rect x="228" y="436" width="184" height="76" rx="7"/></g>
+<g font-size="18"><text x="120" y="464">执行维度</text><text x="320" y="464">用量维度</text></g>
+<g font-size="13" fill="#59646d"><text x="120" y="489">完成 / 中断 / 取消</text><text x="320" y="489">已结算 / 未知 / 已释放</text></g>
+</g></svg>

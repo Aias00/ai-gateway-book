@@ -1,0 +1,132 @@
+{
+  "experiment": "loopback-http-gateway-v1",
+  "checked_at": "2026-10-21T08:14:07.810190+00:00",
+  "unit_contract": "utf8-bytes-v1",
+  "cases": [
+    {
+      "name": "authorized_safe_failover",
+      "http_status": 200,
+      "events": [
+        "token",
+        "token",
+        "usage",
+        "done"
+      ],
+      "upstream_operations": [
+        0,
+        1
+      ],
+      "accounting": {
+        "reservation_units": 102,
+        "actual_units": 13,
+        "usage_state": "settled",
+        "outcome": "completed",
+        "active": false
+      },
+      "balance": {
+        "budget_units": 10000,
+        "spent_units": 13,
+        "held_units": 0,
+        "available_units": 9987,
+        "active": 0
+      }
+    },
+    {
+      "name": "interrupted_not_replayed",
+      "http_status": 200,
+      "events": [
+        "token",
+        "error"
+      ],
+      "backup_requests": 0,
+      "accounting_before_reconciliation": {
+        "reservation_units": 22,
+        "actual_units": null,
+        "usage_state": "unknown",
+        "outcome": "failed",
+        "active": false
+      },
+      "balance_held": {
+        "budget_units": 110,
+        "spent_units": 0,
+        "held_units": 22,
+        "available_units": 88,
+        "active": 0
+      },
+      "authoritative_fixture_units": 6,
+      "balance_after_reconciliation": {
+        "budget_units": 110,
+        "spent_units": 6,
+        "held_units": 0,
+        "available_units": 104,
+        "active": 0
+      }
+    },
+    {
+      "name": "cancel_and_concurrency",
+      "concurrent_http_status": 429,
+      "cancel_http_status": 202,
+      "upstream_observed_disconnect": true,
+      "accounting": {
+        "reservation_units": 1002,
+        "actual_units": null,
+        "usage_state": "unknown",
+        "outcome": "cancelled",
+        "active": false
+      },
+      "balance": {
+        "budget_units": 10000,
+        "spent_units": 0,
+        "held_units": 1002,
+        "available_units": 8998,
+        "active": 0
+      }
+    },
+    {
+      "name": "slow_consumer",
+      "queue_capacity_events": 2,
+      "queue_peak": 2,
+      "backpressure_observed": true,
+      "upstream_observed_disconnect": true,
+      "usage_state": "unknown"
+    },
+    {
+      "name": "audit_allowlist",
+      "sensitive_values_absent": true,
+      "audit": [
+        {
+          "event": "admitted",
+          "request_id": "privacy",
+          "reservation_units": 119,
+          "tenant": "tenant-a",
+          "time": 1792570447.765
+        },
+        {
+          "attempt": 1,
+          "event": "route_attempt",
+          "request_id": "privacy",
+          "route": "primary",
+          "tenant": "tenant-a",
+          "time": 1792570447.765
+        },
+        {
+          "actual_units": 42,
+          "event": "finished",
+          "outcome": "completed",
+          "reason": "final_usage_received",
+          "request_id": "privacy",
+          "tenant": "tenant-a",
+          "time": 1792570447.783,
+          "usage_state": "settled"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "one process; volatile ledger and audit",
+    "loopback HTTP; fixture credentials",
+    "no vendor API or real model capability evaluation",
+    "queue bound excludes socket and HTTP library buffers",
+    "socket cancellation does not prove provider compute or billing stopped"
+  ]
+}

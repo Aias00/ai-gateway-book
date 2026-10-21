@@ -1,0 +1,63 @@
+name: Build, verify and publish book
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: book-pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: '3.12.1'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run experiment tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Build all reading formats
+        run: python3 scripts/build.py
+      - name: Verify source, EPUB and website integrity
+        run: python3 scripts/verify.py
+      - name: Validate EPUB 3
+        run: sh scripts/epubcheck.sh
+      - name: Install browser tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.64.1
+          npx playwright install --with-deps chromium
+      - name: Verify reading interactions and mobile layout
+        run: |
+          python3 -m http.server 8767 --bind 127.0.0.1 --directory site > /tmp/book-http.log 2>&1 &
+          node scripts/browser-check.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: book-downloads
+          path: site/downloads/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deploy
