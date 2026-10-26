@@ -1,6 +1,6 @@
 # 附录 B：来源、版本与复核方法
 
-以下第一方资料已于 2026-10-21 读取。标准按节号定位；持续更新的产品文档保留读取日期。更详细的结论边界保存在仓库 `research/sources.md`。实验采用自己的协议，不表示符合所有真实供应商接口，也不提供价格或可用性承诺。
+S01—S10 第一方资料于 2026-10-21 读取；S11 源码于 2026-10-25 在本地固定提交核对。标准按节号定位；持续更新的产品文档保留读取日期。更详细的结论边界保存在仓库 `research/sources.md`。实验采用自己的协议，不表示符合所有真实供应商接口，也不提供价格或可用性承诺。
 
 ## HTTP 与事件流
 
@@ -27,6 +27,10 @@
 **S09，Gemini，Models API。** <https://ai.google.dev/api/models>。模型元数据提供名称以外的信息，例如输入、输出限制与生成方法。一个生成方法字段不足以证明工具、结构化输出和所有其他能力兼容。
 
 **S10，Amazon Bedrock，ConverseStream。** <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html>。统一调用接口仍有模型能力差异；消息停止、metadata 与 usage 应按实际事件协议解释。该服务的事件流不能直接当作 SSE 使用。
+
+## 开源实现案例
+
+**S11，Agentgateway 固定源码。** 提交 `1785d189bbbd29bc87630030c3c3e1c91fda694e`，本地读取日期 2026-10-25。架构依据：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/architecture/configuration.md>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/architecture/cel.md>。实现入口：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/app.rs>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/proxy/httpproxy.rs>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/mcp/README.md>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/llm/README.md>。用于第 18 章的模块分工、配置内部表示、CEL 上下文和协议适配讨论。源码观察不代表本书已运行该工程，也不能证明真实上游兼容性、性能、多副本预算一致性或远端取消。详细定位见仓库研究记录。
 
 ## 使用这些资料的方法
 

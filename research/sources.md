@@ -1,6 +1,6 @@
 # 资料核对与引用边界
 
-本书是一套教学用网关实验，不代表任何供应商的 SLA、价格或账单承诺。以下来源均已于 **2026-10-21** 实际读取；标准按节号定位，持续更新的文档按页面标题与小节定位。正文引用可使用 `[S01]` 至 `[S10]`，并链接到本页。
+本书是一套教学用网关实验，不代表任何供应商的 SLA、价格或账单承诺。S01—S10 已于 **2026-10-21** 实际读取，S11 源码于 **2026-10-25** 按固定提交核对；标准按节号定位，持续更新的文档按页面标题与小节定位。正文引用可使用 `[S01]` 至 `[S11]`，并链接到本页。
 
 本页区分三件事：标准明确规定的行为、某一产品文档描述的行为，以及本书为了实验可复现而选择的策略。不能把第三种写成前两种，也不能把某一供应商的字段解释套用到所有兼容接口。
 
@@ -110,3 +110,19 @@
 ## 复核办法
 
 发布前或替换真实供应商适配器时，重新打开所引用的小节；对会变化的内容保留读取日期，不把具体模型、套餐限额或价格抄成长期常量。协议测试必须覆盖 UTF-8 跨读取边界、CRLF 跨读取边界、多行 data、不完整末事件、流内 error、累计 usage、终止前断流，以及未知事件。所有性能数字应附实验配置与测量方法；本页未提供任何真实供应商压测或可用性证据。
+
+## S11 · Agentgateway：固定提交的工程实现
+
+- 仓库：<https://github.com/agentgateway/agentgateway>。
+- 固定提交：`1785d189bbbd29bc87630030c3c3e1c91fda694e`；本地检出无工作区修改。
+- 读取日期：2026-10-25。读取方式：本地源码与仓库文档；没有运行网关、供应商调用或 Kubernetes 集群。
+- 配置架构：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/architecture/configuration.md>。支持静态、本地动态和 xDS 三类配置、本地与远程配置映射共享 IR、保留资源粒度和运行时策略合并的说明。
+- CEL：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/architecture/cel.md>。支持上下文阶段性、配置解析时依赖分析、按需保留请求数据及分析限制的说明。
+- 启动与状态：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/app.rs>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/state_manager.rs>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/lib.rs>。定位运行时组装、文件监听及重新加载状态；不能据此推出请求级完整配置快照。
+- 请求处理：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/proxy/httpproxy.rs>。定位 proxy、proxy_internal、attempt_upstream 及阶段策略；本章的简化流程不是所有请求的精确执行顺序。
+- 模型：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/examples/llm-basic/config.yaml>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/llm/README.md>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/llm/src/lib.rs>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/llm/src/golden_tests.rs>。支持别名结构、保留未知字段、类型转换和测试入口的说明，不提供任意字段跨协议无损保证。
+- MCP：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/mcp/README.md>。支持目标条件与响应资源授权的区分及该版协议协商说明；不是通用 MCP 规范来源。
+- 管理和预算：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/management/admin.rs>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/agentgateway/src/http/budget/>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/ui/src/pages/>。仅用于定位相应能力；没有从模块存在推断已启用、事务一致性或账单准确性。
+- 控制面：<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/controller/pkg/agentgateway/translator/>、<https://github.com/agentgateway/agentgateway/blob/1785d189bbbd29bc87630030c3c3e1c91fda694e/crates/protos/proto/resource.proto>。定位资源转换与项目自定义 xDS 消息。
+- 在本书中的用法：第 18 章将教学不变量映射到源码模块，给出待执行故障矩阵；不改变原 Python 实验合同。
+- 不能据此声称：本书已验证该提交默认重试或取消语义、真实供应商能力、价格、吞吐、多副本原子预算或业务副作用撤销。
